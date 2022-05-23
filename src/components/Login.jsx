@@ -1,5 +1,9 @@
 import "./Login.css";
 import { auth, provider } from "../firebase";
+import src from "./login-logo.png";
+// import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
+
 export default function Login() {
   function login() {
     auth.signInWithRedirect(provider);
@@ -13,7 +17,7 @@ export default function Login() {
               New Whatsapp Features
             </h1>
             <img
-              src="/login-logo.png"
+              src={src}
               alt="Logo"
               className="h-24 w-24 mt-4 m-auto text-green-500"
             />

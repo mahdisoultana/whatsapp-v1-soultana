@@ -14,7 +14,7 @@ import SidebarList from "./SidebarList";
 
 const dummyImg =
   "https://images.unsplash.com/photo-1648737119247-e93f56878edf?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872";
-import { NavLink, Switch, Route } from "react-router-dom";
+import { NavLink, Switch, Route, useHistory } from "react-router-dom";
 import useRooms from "../hooks/useRooms";
 import { useUsers } from "../hooks/useUsers";
 import useChats from "../hooks/useChats";
@@ -23,9 +23,12 @@ export default function Sidebar({ user, page }) {
   const chats = useChats(user);
   const rooms = useRooms();
   const users = useUsers(user);
-
+  const history = useHistory();
   const [menu, setMenu] = React.useState(1);
   function signOut() {
+    if (!page.isMobile) {
+      history.push("/");
+    }
     auth.signOut();
   }
   let Nav;
@@ -66,10 +69,7 @@ export default function Sidebar({ user, page }) {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("====================================");
-      console.log(usersSnapshot);
-      console.log(users);
-      console.log("====================================");
+
       const searchResult = [...users, ...rooms];
       setSearch(searchResult);
       setMenu(4);
